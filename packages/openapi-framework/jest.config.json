@@ -1,0 +1,18 @@
+{
+  "testMatch": [
+    "**/?(*.)+(spec|test).+(ts)"
+  ],
+  "transform": {
+    "^.+\\.tsx?$": "ts-jest"
+  },
+  "coveragePathIgnorePatterns": [
+    "/node_modules/",
+    "/fixtures/",
+    "/cjm/",
+    "/esm/",
+    "/precompiled/"
+  ],
+  "moduleDirectories": [
+    "node_modules"
+  ]
+}

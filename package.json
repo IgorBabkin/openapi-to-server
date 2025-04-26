@@ -1,0 +1,49 @@
+{
+  "name": "root",
+  "private": true,
+  "author": "ibabkin <igba14@gmail.com>",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "commit": "git-cz",
+    "format": "prettier --write \"packages/**/*.ts\"",
+    "lint": "eslint packages/**/*.ts",
+    "lint:fix": "yarn lint --fix",
+    "test": "lerna run test",
+    "build": "lerna run build",
+    "generate:docs": "lerna run generate:docs",
+    "coverage": "lerna run coverage",
+    "release:publish": "lerna publish",
+    "release": "yarn build && yarn test && yarn release:publish",
+    "prepare": "husky"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-lerna-changelog"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@nrwl/nx-cloud": "^16.0.5",
+    "@typescript-eslint/eslint-plugin": "5.62.0",
+    "@typescript-eslint/parser": "5.62.0",
+    "cz-lerna-changelog": "2.0.3",
+    "eslint": "8.57.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-prettier": "5.1.3",
+    "git-cz": "^4.9.0",
+    "husky": "^9.1.7",
+    "lerna": "^8.2.2",
+    "lint-staged": "^15.4.3",
+    "prettier": "3.5.2"
+  },
+  "version": "0.0.0",
+  "packageManager": "yarn@3.6.3"
+}
