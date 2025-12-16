@@ -94,3 +94,36 @@ Handlebars.registerHelper('payload_name', function (operationId: string) {
 Handlebars.registerHelper('response_name', function (operationId: string) {
   return `${capitalize(operationId)}Response`;
 });
+Handlebars.registerHelper('controller_name', function (tag: string) {
+  return `I${capitalize(tag)}Controller`;
+});
+
+Handlebars.registerHelper('group_by_tags', function (paths: OpenAPIV3.PathsObject) {
+  const grouped: Record<
+    string,
+    Array<{ operationId: string; operation: OpenAPIV3.OperationObject; method: string; path: string }>
+  > = {};
+
+  Object.entries(paths).forEach(([path, pathItem]) => {
+    if (!pathItem) return;
+
+    ['get', 'post', 'put', 'delete', 'patch'].forEach((method) => {
+      const operation = pathItem[method as keyof OpenAPIV3.PathItemObject] as OpenAPIV3.OperationObject | undefined;
+      if (operation?.operationId) {
+        const tags = operation.tags || ['Default'];
+        const tag = tags[0]; // Use only the first tag
+        if (!grouped[tag]) {
+          grouped[tag] = [];
+        }
+        grouped[tag].push({
+          operationId: operation.operationId!,
+          operation,
+          method,
+          path,
+        });
+      }
+    });
+  });
+
+  return grouped;
+});

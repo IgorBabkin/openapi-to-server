@@ -705,9 +705,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ibabkin/openapi-to-server@workspace:packages/openapi-to-server":
+"@ibabkin/openapi-to-server@workspace:packages/openapi-framework":
   version: 0.0.0-use.local
-  resolution: "@ibabkin/openapi-to-server@workspace:packages/openapi-to-server"
+  resolution: "@ibabkin/openapi-to-server@workspace:packages/openapi-framework"
   dependencies:
     "@types/args": ^5.0.0
     "@types/jest": 29.5.14
@@ -728,45 +728,6 @@ __metadata:
     openapi-to-client: cjm/useCases/openapiToClient.cli.js
     openapi-to-server: cjm/useCases/openapiToServer.cli.js
     openapi-to-zod: cjm/useCases/openapiToServer.cli.js
-  languageName: unknown
-  linkType: soft
-
-"@ibabkin/openapi-to-zod@workspace:packages/openapi-to-zod":
-  version: 0.0.0-use.local
-  resolution: "@ibabkin/openapi-to-zod@workspace:packages/openapi-to-zod"
-  dependencies:
-    "@types/args": ^5.0.0
-    "@types/jest": 29.5.14
-    args: ^5.0.3
-    handlebars: ^4.7.7
-    jest: 29.7.0
-    js-yaml: ^4.1.0
-    make-dir-cli: ^3.0.0
-    openapi-types: ^12.1.0
-    rimraf: 3.0.2
-    ts-jest: 29.2.5
-    typescript: 5.7.3
-    yaml-import: ^2.0.0
-    zod: ^3.21.4
-  bin:
-    openapi-to-zod: cjm/useCases/openapiToZod.cli.js
-  languageName: unknown
-  linkType: soft
-
-"@ibabkin/utils@workspace:packages/aop-framework":
-  version: 0.0.0-use.local
-  resolution: "@ibabkin/utils@workspace:packages/aop-framework"
-  dependencies:
-    "@types/jest": 29.5.14
-    "@types/node": ^17.0.21
-    jest: 29.7.0
-    nodemon: ^2.0.13
-    reflect-metadata: ^0.1.13
-    rimraf: 3.0.2
-    ts-jest: 29.2.5
-    typescript: 5.7.3
-  peerDependencies:
-    reflect-metadata: ^0.2.2
   languageName: unknown
   linkType: soft
 
@@ -1993,13 +1954,6 @@ __metadata:
   version: 20.4.1
   resolution: "@types/node@npm:20.4.1"
   checksum: 22cbcc792f2eb636fe4188778ed0f32658ab872aa7fcb9847b3fa289a42b14b9f5e30c6faec50ef3c7adbc6c2a246926e5858136bb8b10c035a3fcaa6afbeed2
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:^17.0.21":
-  version: 17.0.45
-  resolution: "@types/node@npm:17.0.45"
-  checksum: aa04366b9103b7d6cfd6b2ef64182e0eaa7d4462c3f817618486ea0422984c51fc69fd0d436eae6c9e696ddfdbec9ccaa27a917f7c2e8c75c5d57827fe3d95e8
   languageName: node
   linkType: hard
 
@@ -7249,7 +7203,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nodemon@npm:^2.0.13, nodemon@npm:^2.0.22":
+"nodemon@npm:^2.0.22":
   version: 2.0.22
   resolution: "nodemon@npm:2.0.22"
   dependencies:
@@ -8489,13 +8443,6 @@ __metadata:
     indent-string: ^5.0.0
     strip-indent: ^4.0.0
   checksum: 6944e7b1d8f3fd28c2515f5c605b9f7f0ea0f4edddf41890bbbdd4d9ee35abb7540c3b278f03ff827bd278bb6ff4a5bd8692ca406b748c5c1c3ce7355e9fbf8f
-  languageName: node
-  linkType: hard
-
-"reflect-metadata@npm:^0.1.13":
-  version: 0.1.13
-  resolution: "reflect-metadata@npm:0.1.13"
-  checksum: 798d379a7b6f6455501145419505c97dd11cbc23857a386add2b9ef15963ccf15a48d9d15507afe01d4cd74116df8a213247200bac00320bd7c11ddeaa5e8fb4
   languageName: node
   linkType: hard
 
@@ -10185,12 +10132,5 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: f77b3d8d00310def622123df93d4ee654fc6a0096182af8bd60679ddcdfb3474c56c6c7190817c84a2785648cdee9d721c0154eb45698c62176c322fb46fc700
-  languageName: node
-  linkType: hard
-
-"zod@npm:^3.21.4":
-  version: 3.21.4
-  resolution: "zod@npm:3.21.4"
-  checksum: f185ba87342ff16f7a06686767c2b2a7af41110c7edf7c1974095d8db7a73792696bcb4a00853de0d2edeb34a5b2ea6a55871bc864227dace682a0a28de33e1f
   languageName: node
   linkType: hard
