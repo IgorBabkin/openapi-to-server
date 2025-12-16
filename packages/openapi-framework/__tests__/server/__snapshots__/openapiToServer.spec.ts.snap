@@ -1,0 +1,7160 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`openapiToServer should generate server types from OpenAPI spec 1`] = `
+"import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+import { Route, HttpResponse, HttpStatus } from '@ibabkin/openapi-to-server';
+
+// Components
+export type Manufacturer = {
+name: string  ;
+homePage?: string  ;
+phone?: string  ;
+}
+;
+export type InventoryItem = {
+id: string  ;
+name: string  ;
+releaseDate: Date  ;
+manufacturer: Manufacturer;
+}
+;
+
+// Routes
+    export type DeleteInventoryPayload = {
+    params: {
+  id: string  ,
+}
+
+};
+
+export interface DeleteInventoryResponse extends HttpResponse {
+  status: HttpStatus.NoContent;
+
+  headers: {
+  };
+
+}
+
+export interface DeleteInventoryRoute extends Route<DeleteInventoryPayload, DeleteInventoryResponse> {}
+
+    export type AddInventoryPayload = {
+    body: InventoryItem
+};
+
+export interface AddInventoryResponse extends HttpResponse {
+  status: HttpStatus.Found;
+
+  headers: {
+    Location: string  
+  };
+
+}
+
+export interface AddInventoryRoute extends Route<AddInventoryPayload, AddInventoryResponse> {}
+
+    export type SearchInventoryPayload = {
+    query: {
+  searchString?: string  ,
+  skip?: number
+  ,
+  limit?: number
+  ,
+}
+
+};
+
+export interface SearchInventoryResponse extends HttpResponse {
+  status: HttpStatus.OK;
+
+  headers: {
+  };
+
+  body:     InventoryItem[]
+;
+}
+
+export interface SearchInventoryRoute extends Route<SearchInventoryPayload, SearchInventoryResponse> {}
+
+
+// Operations
+export type Operations = {
+  deleteInventory: DeleteInventoryRoute;
+  addInventory: AddInventoryRoute;
+  searchInventory: SearchInventoryRoute;
+}
+
+export type RoutesPayloads = {
+  deleteInventory: DeleteInventoryPayload;
+  addInventory: AddInventoryPayload;
+  searchInventory: SearchInventoryPayload;
+}
+
+// Context
+export interface RequestContext {
+  getUrl<Key extends keyof RoutesPayloads>(key: Key, payload: RoutesPayloads[Key]): string;
+}
+// Controller Interfaces
+  /**
+  * Controller interface for developers operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IDevelopersController {
+    /**
+    * searches inventory
+      * By passing in the appropriate options, you can search for
+available inventory in the system
+
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    searchInventory(payload: SearchInventoryPayload): Promise<SearchInventoryResponse>;
+
+  }
+  /**
+  * Controller interface for admins operations
+  * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+  */
+  export interface IAdminsController {
+    /**
+    * adds an inventory item
+      * Adds an item to the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    addInventory(payload: AddInventoryPayload): Promise<AddInventoryResponse>;
+
+    /**
+    * deletes an inventory item
+      * Deletes an item from the system
+    * @param payload - Request payload including path params, query params, and body
+    * @returns Promise with the operation response
+    */
+    deleteInventory(payload: DeleteInventoryPayload): Promise<DeleteInventoryResponse>;
+
+  }
+// Server Interface
+export interface IServer {
+  developers: constructor<IDevelopersController>;
+  admins: constructor<IAdminsController>;
+}
+"
+`;

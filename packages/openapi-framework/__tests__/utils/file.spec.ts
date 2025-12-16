@@ -1,4 +1,4 @@
-import { getFilenameWithoutPath, getPathToFileWithoutFileName } from '../lib/utils/file';
+import { getFilenameWithoutPath, getPathToFileWithoutFileName } from '../../lib/utils/file';
 
 describe('file', function () {
   it('getFilename should return filename without path', function () {

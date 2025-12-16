@@ -12,6 +12,6 @@ describe('swagger', function () {
       outputFile: outputFile,
     });
 
-    expect(fs.readFileSync(outputFile)).toMatchSnapshot();
+    expect(fs.readFileSync(outputFile, 'utf-8')).toMatchSnapshot();
   });
 });
