@@ -1,15 +1,24 @@
-import type {
-  GetTodosPayload,
-  GetTodosResponse,
-  CreateTodoPayload,
-  CreateTodoResponse,
-  GetTodoPayload,
-  GetTodoResponse,
-  UpdateTodoPayload,
-  UpdateTodoResponse,
-  DeleteTodoPayload,
-  DeleteTodoResponse,
-} from '../.generated/operations.js';
+type GetHealthPayload = Record<string, never>;
+
+/**
+ * Controller interface for Health operations
+ * Each method corresponds to an OpenAPI operation defined in swagger.yaml
+ */
+export interface HealthController {
+  /**
+   * Health check
+   * @param payload - Request payload including path params, query params, and body
+   * @returns Promise with the operation response
+   */
+  getHealth(payload: GetHealthPayload): Promise<OkResponse<Record<string, never>>>;
+
+  /**
+   * Database health check
+   * @param payload - Request payload including path params, query params, and body
+   * @returns Promise with the operation response
+   */
+  getHealthDb(payload: GetHealthDbPayload): Promise<GetHealthDbResponse>;
+}
 
 /**
  * Controller interface for Todos operations

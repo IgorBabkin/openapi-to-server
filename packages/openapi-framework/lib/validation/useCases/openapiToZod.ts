@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from 'openapi-types';
-import { isYAML, loadYAML } from '../utils/yaml';
-import { loadJSON } from '../utils/json';
+import { isYAML, loadYAML } from '../../utils/yaml';
+import { loadJSON } from '../../utils/json';
 import fs from 'fs';
 import { renderDocument } from '../templates';
 

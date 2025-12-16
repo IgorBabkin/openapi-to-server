@@ -5,6 +5,10 @@
   "transform": {
     "^.+\\.tsx?$": "ts-jest"
   },
+  "transformIgnorePatterns": [
+    "node_modules/(?!.*\\.mjs$)",
+    "precompiled/"
+  ],
   "coveragePathIgnorePatterns": [
     "/node_modules/",
     "/fixtures/",
@@ -13,6 +17,7 @@
     "/precompiled/"
   ],
   "moduleDirectories": [
-    "node_modules"
+    "node_modules",
+    "<rootDir>"
   ]
 }

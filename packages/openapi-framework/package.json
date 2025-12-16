@@ -35,12 +35,12 @@
   },
   "scripts": {
     "build": "npm run clean && npm run compile",
-    "test": "make-dir .generated && jest",
+    "test": "npm run precompile && make-dir .generated && jest",
     "test:watch": "jest --coverage --watch",
-    "precompile": "make-dir precompiled && handlebars lib/server/templates/*.hbs -f precompiled/templates.js -c handlebars/runtime",
+    "precompile": "make-dir precompiled && handlebars lib/server/templates/*.hbs lib/validation/templates/*.hbs -f precompiled/templates.js -c handlebars/runtime",
     "clean": "rimraf cjm",
     "watch": "nodemon --watch lib --exec 'npm run compile'",
-    "compile": "tsc -p tsconfig.json --outDir cjm"
+    "compile": "npm run precompile && tsc -p tsconfig.json --outDir cjm"
   },
   "dependencies": {
     "args": "^5.0.3",

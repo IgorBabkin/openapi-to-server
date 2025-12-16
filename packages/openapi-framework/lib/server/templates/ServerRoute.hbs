@@ -16,6 +16,9 @@ export interface {{response_name operationId}} extends HttpResponse {
 {{#if (get_value_by_key responses '200')}}
   status: HttpStatus.OK;
 {{/if}}
+{{#if (get_value_by_key responses '201')}}
+  status: HttpStatus.Created;
+{{/if}}
 {{#if (get_value_by_key responses '302')}}
   status: HttpStatus.Found;
 {{/if}}
@@ -32,9 +35,14 @@ export interface {{response_name operationId}} extends HttpResponse {
 {{#if (get_value_by_key responses '200.content.application/json.schema')}}
   body: {{{render_template 'JsonSchema.hbs' (get_value_by_key responses '200.content.application/json.schema')}}};
 {{/if}}
+{{#if (get_value_by_key responses '201.content.application/json.schema')}}
+  body: {{{render_template 'JsonSchema.hbs' (get_value_by_key responses '201.content.application/json.schema')}}};
+{{/if}}
 }
 
 {{#if (get_value_by_key responses '200')}}
+export interface {{route_name operationId}} extends Route<{{payload_name operationId}}, {{response_name operationId}}> {}
+{{else if (get_value_by_key responses '201')}}
 export interface {{route_name operationId}} extends Route<{{payload_name operationId}}, {{response_name operationId}}> {}
 {{else if (get_value_by_key responses '302')}}
 export interface {{route_name operationId}} extends Route<{{payload_name operationId}}, {{response_name operationId}}> {}
