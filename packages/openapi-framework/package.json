@@ -28,19 +28,16 @@
     "cjm/**/*",
     "precompiled/**/*"
   ],
-  "bin": {
-    "openapi-to-client": "cjm/useCases/openapiToClient.cli.js",
-    "openapi-to-server": "cjm/useCases/openapiToServer.cli.js",
-    "openapi-to-zod": "cjm/useCases/openapiToServer.cli.js"
-  },
   "scripts": {
     "build": "npm run clean && npm run compile",
-    "test": "npm run precompile && make-dir .generated && jest",
+    "test": "npm run hbs:compile && make-dir .generated && jest",
     "test:watch": "jest --coverage --watch",
-    "precompile": "make-dir precompiled && handlebars lib/server/templates/*.hbs lib/validation/templates/*.hbs -f precompiled/templates.js -c handlebars/runtime",
+    "hbs:compile": "make-dir precompiled && npm run hbs:compile:server && npm run hbs:compile:validation",
+    "hbs:compile:server": "handlebars lib/server/templates/*.hbs -f precompiled/server.js -c handlebars/runtime",
+    "hbs:compile:validation": "handlebars lib/validation/templates/*.hbs -f precompiled/validation.js -c handlebars/runtime",
     "clean": "rimraf cjm",
     "watch": "nodemon --watch lib --exec 'npm run compile'",
-    "compile": "npm run precompile && tsc -p tsconfig.json --outDir cjm"
+    "compile": "npm run hbs:compile && tsc -p tsconfig.json --outDir cjm"
   },
   "dependencies": {
     "args": "^5.0.3",

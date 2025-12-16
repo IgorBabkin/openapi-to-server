@@ -39,7 +39,9 @@ npx jest __tests__/swagger.spec.ts
 # Build
 npm run build              # Full build (clean + compile)
 npm run compile            # TypeScript compilation only
-npm run precompile         # Precompile Handlebars templates
+npm run hbs:compile        # Precompile all Handlebars templates
+npm run hbs:compile:server # Precompile server templates only
+npm run hbs:compile:validation # Precompile validation templates only
 
 # Test
 npm run test               # Run all tests with Jest
@@ -49,16 +51,29 @@ npm run test:watch         # Watch mode with coverage
 npm run clean              # Remove compiled output
 ```
 
-### CLI Tools (after build)
-```bash
-# Generate server types from OpenAPI spec
-openapi-to-server --input ./swagger.yaml --output ./operations.d.ts --json
+### Programmatic API Usage
+```typescript
+import { openapiToServer, openapiToClient } from '@ibabkin/openapi-to-server';
+import { openapiToZod } from '@ibabkin/openapi-to-server/validation';
 
-# Generate client code
-openapi-to-client --input ./swagger.yaml --output ./client.ts
+// Generate server types
+openapiToServer({
+  inputFile: './swagger.yaml',
+  outputFile: './operations.d.ts',
+  emitJSON: true  // Optional: emit JSON alongside TypeScript
+});
 
-# Generate Zod validation schemas
-openapi-to-zod --input ./swagger.yaml --output ./validation.ts
+// Generate client code
+openapiToClient({
+  inputFile: './swagger.yaml',
+  outputFile: './client.ts'
+});
+
+// Generate Zod validation schemas
+openapiToZod({
+  inputFile: './swagger.yaml',
+  outputFile: './validation.ts'
+});
 ```
 
 ## Architecture Overview
@@ -90,10 +105,19 @@ Templates are located in `packages/openapi-framework/lib/server/templates/`:
 - **Parameters.hbs**: Converts parameter definitions to TypeScript types
 - **Client.hbs**: Generates Axios-based API client
 
-**Template Precompilation**: Templates are precompiled during build using:
+**Template Precompilation**: Templates are precompiled during build into separate files:
 ```bash
-handlebars lib/server/templates/*.hbs -f precompiled/templates.js -c handlebars/runtime
+# Server templates
+handlebars lib/server/templates/*.hbs -f precompiled/server.js -c handlebars/runtime
+
+# Validation templates
+handlebars lib/validation/templates/*.hbs -f precompiled/validation.js -c handlebars/runtime
 ```
+
+The split allows:
+- Faster incremental builds (only recompile changed template groups)
+- Better code organization (server vs validation concerns separated)
+- Smaller bundle sizes when using only one generator
 
 ### Custom Handlebars Helpers
 
@@ -183,22 +207,26 @@ components:
 **Build Output**:
 - TypeScript compiled to CommonJS in `cjm/` directory
 - Type definitions in `cjm/*.d.ts`
-- Precompiled templates in `precompiled/templates.js`
+- Precompiled templates split into:
+  - `precompiled/server.js` - Server/client template functions
+  - `precompiled/validation.js` - Zod validation template functions
 - Only `cjm/` and `precompiled/` are published to npm
 
 ## Common Gotchas
 
-1. **Template Registration**: When adding new templates, update both:
-   - `lib/server/templates/index.ts` (export render function)
-   - `lib/server/useCases/openapiToServer.ts` (call render function)
+1. **Template Registration**: When adding new templates, update:
+   - For server templates: `lib/server/templates/index.ts` (export render function) and `lib/server/useCases/openapiToServer.ts` (call render function)
+   - For validation templates: `lib/validation/templates/index.ts` and corresponding use case
 
-2. **Handlebars Precompilation**: After modifying `.hbs` files, run `npm run precompile` before testing
+2. **Handlebars Precompilation**: After modifying `.hbs` files, run `npm run hbs:compile` (or `hbs:compile:server`/`hbs:compile:validation` for specific templates) before testing
 
-3. **Response Status Codes**: Currently handles: 200 (OK), 201 (Created), 204 (No Content), 302 (Found). Add new status codes in `ServerRoute.hbs` if needed.
+3. **Template Loading**: Server templates require `precompiled/server.js`, validation templates require `precompiled/validation.js`. Each index.ts loads its corresponding precompiled file.
 
-4. **Helper Registration**: Custom helpers must be registered in `helpers.ts` before use in templates
+4. **Response Status Codes**: Currently handles: 200 (OK), 201 (Created), 204 (No Content), 302 (Found). Add new status codes in `ServerRoute.hbs` if needed.
 
-5. **Lerna Publishing**: Use `yarn release` (builds, tests, then publishes) not `yarn release:publish` directly
+5. **Helper Registration**: Custom helpers must be registered in their respective `helpers.ts` files before use in templates
+
+6. **Lerna Publishing**: Use `yarn release` (builds, tests, then publishes) not `yarn release:publish` directly
 
 ## Code Style
 
