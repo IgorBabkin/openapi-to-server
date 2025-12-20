@@ -19,7 +19,7 @@ export function openapiToServer({ inputFile, outputFile, emitJSON }: Props) {
     const outputPath: string = getPathToFileWithoutFileName(outputFile);
     saveJSON(path.resolve(outputPath, inputFilename.replace(/\.yaml$/, '.json')), content);
   }
-  fs.writeFileSync(outputFile, renderComponents(content), { encoding: 'utf8', flag: 'a' });
+  fs.writeFileSync(outputFile, renderComponents(content), { encoding: 'utf8', flag: 'w' });
   fs.writeFileSync(outputFile, renderControllers(content), { encoding: 'utf8', flag: 'a' });
   fs.writeFileSync(outputFile, renderServer(content), { encoding: 'utf8', flag: 'a' });
 }
