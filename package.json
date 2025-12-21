@@ -3,20 +3,20 @@
   "private": true,
   "author": "ibabkin <igba14@gmail.com>",
   "license": "MIT",
-  "workspaces": [
-    "packages/*"
-  ],
+  "engines": {
+    "node": "22"
+  },
   "scripts": {
     "commit": "git-cz",
     "format": "prettier --write \"packages/**/*.ts\"",
     "lint": "eslint packages/**/*.ts",
-    "lint:fix": "yarn lint --fix",
+    "lint:fix": "pnpm lint --fix",
     "test": "lerna run test",
     "build": "lerna run build",
     "generate:docs": "lerna run generate:docs",
     "coverage": "lerna run coverage",
     "release:publish": "lerna publish",
-    "release": "yarn build && yarn test && yarn release:publish",
+    "release": "pnpm build && pnpm test && pnpm release:publish",
     "prepare": "husky"
   },
   "config": {
@@ -31,6 +31,7 @@
     ]
   },
   "devDependencies": {
+    "@faker-js/faker": "^10.1.0",
     "@nrwl/nx-cloud": "^16.0.5",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
@@ -45,5 +46,5 @@
     "prettier": "3.5.2"
   },
   "version": "0.0.0",
-  "packageManager": "yarn@3.6.3"
+  "packageManager": "pnpm@9.15.0"
 }
