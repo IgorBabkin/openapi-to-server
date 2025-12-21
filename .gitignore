@@ -6,8 +6,14 @@ node_modules
 typings
 lerna-debug.log
 yarn-error.log
+pnpm-debug.log*
 precompiled
 .generated
 .vscode
-.yarn/cache
-.yarn/install-state.gz
+
+# pnpm
+.pnpm-store
+
+# Yarn (deprecated - migrated to pnpm)
+# .yarn/cache
+# .yarn/install-state.gz
