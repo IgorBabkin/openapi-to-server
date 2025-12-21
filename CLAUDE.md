@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a **TypeScript-based OpenAPI code generation framework** that converts OpenAPI 3.0 specifications into type-safe TypeScript code. The project uses a Lerna monorepo with Yarn workspaces.
+This is a **TypeScript-based OpenAPI code generation framework** that converts OpenAPI 3.0 specifications into type-safe TypeScript code. The project uses a Lerna monorepo with pnpm workspaces.
 
 **Main Package**: `@ibabkin/openapi-to-server` - Generates server interfaces, client code, and Zod validation schemas from OpenAPI specs.
 
@@ -13,17 +13,17 @@ This is a **TypeScript-based OpenAPI code generation framework** that converts O
 ### Root-level Commands
 ```bash
 # Build all packages
-yarn build
+pnpm build
 
 # Run all tests
-yarn test
+pnpm test
 
 # Lint code
-yarn lint
-yarn lint:fix
+pnpm lint
+pnpm lint:fix
 
 # Format code
-yarn format
+pnpm format
 
 # Watch mode (package-level)
 cd packages/openapi-framework
@@ -226,11 +226,11 @@ components:
 
 5. **Helper Registration**: Custom helpers must be registered in their respective `helpers.ts` files before use in templates
 
-6. **Lerna Publishing**: Use `yarn release` (builds, tests, then publishes) not `yarn release:publish` directly
+6. **Lerna Publishing**: Use `pnpm release` (builds, tests, then publishes) not `pnpm release:publish` directly
 
 ## Code Style
 
 - **Prettier**: 120 char line width, single quotes, trailing commas
 - **ESLint**: TypeScript strict mode with Prettier integration
-- **Commits**: Use `yarn commit` for conventional commits via Commitizen
+- **Commits**: Use `pnpm commit` for conventional commits via Commitizen
 - **Hooks**: Husky runs lint-staged on pre-commit (eslint + prettier on staged files)
