@@ -1,5 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-yarn generate:docs
-yarn lint-staged
+pnpm generate:docs
+pnpm lint-staged
