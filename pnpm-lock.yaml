@@ -21,7 +21,7 @@ importers:
         specifier: 5.62.0
         version: 5.62.0(eslint@8.57.0)(typescript@5.7.3)
       cz-lerna-changelog:
-        specifier: 2.0.3
+        specifier: ^2.0.3
         version: 2.0.3(lerna@8.2.4(@types/node@20.19.27)(encoding@0.1.13))(semantic-release@15.14.0(@octokit/core@5.2.2)(encoding@0.1.13))
       eslint:
         specifier: 8.57.0
@@ -62,6 +62,9 @@ importers:
       ts-ioc-container:
         specifier: ^46.6.2
         version: 46.7.1
+      zod:
+        specifier: ^4.2.1
+        version: 4.2.1
     devDependencies:
       '@types/express':
         specifier: ^4.17.21
@@ -4749,6 +4752,9 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
+  zod@4.2.1:
+    resolution: {integrity: sha512-0wZ1IRqGGhMP76gLqz8EyfBXKk0J2qo2+H3fi4mcUP/KtTocoX08nmIAHl1Z2kJIZbZee8KOpBCSNPRgauucjw==}
+
 snapshots:
 
   '@babel/code-frame@7.27.1':
@@ -8333,7 +8339,7 @@ snapshots:
 
   log-symbols@4.1.0:
     dependencies:
-      chalk: 4.1.0
+      chalk: 4.1.2
       is-unicode-supported: 0.1.0
 
   log-update@6.1.0:
@@ -10094,3 +10100,5 @@ snapshots:
       yargs-parser: 21.1.1
 
   yocto-queue@0.1.0: {}
+
+  zod@4.2.1: {}

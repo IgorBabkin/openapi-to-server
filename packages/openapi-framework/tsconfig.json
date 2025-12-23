@@ -10,10 +10,11 @@
     "declarationMap": true,
     "incremental": true,
     "rootDir": "./lib",
-    "outDir": "./cjm"
+    "outDir": "./cjm",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": [
-    "lib",
-    "__tests__/validation/swagger.spec.ts"
+    "lib"
   ]
 }

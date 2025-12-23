@@ -15,6 +15,18 @@
   "license": "ISC",
   "main": "cjm/index.js",
   "types": "cjm/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./cjm/index.js",
+      "require": "./cjm/index.js",
+      "types": "./cjm/index.d.ts"
+    },
+    "./validation": {
+      "import": "./cjm/validation/index.js",
+      "require": "./cjm/validation/index.js",
+      "types": "./cjm/validation/index.d.ts"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/IgorBabkin/ts-ioc-container.git"

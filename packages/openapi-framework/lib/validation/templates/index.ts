@@ -1,5 +1,5 @@
 import './helpers';
-import Handlebars from 'handlebars/runtime';
+import * as Handlebars from 'handlebars/runtime';
 import { OpenAPIV3 } from 'openapi-types';
 
 require('../../../precompiled/validation.js');
