@@ -16,5 +16,10 @@
   },
   "include": [
     "lib"
+  ],
+  "exclude": [
+    "node_modules",
+    "cjm",
+    "__tests__"
   ]
 }

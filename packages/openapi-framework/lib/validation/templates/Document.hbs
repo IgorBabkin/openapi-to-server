@@ -11,13 +11,13 @@ const zDate = z.preprocess((arg) => {
 }, z.date());
 
 {{#each components.schemas as |component componentName|}}
-export const {{componentName}} = {{{render_template 'JsonSchema.hbs' component}}};
+export const {{componentName}} = {{{render_template 'ValidationJsonSchema.hbs' component}}};
 {{/each}}
 
 export const PAYLOADS = {
 {{#each paths as |path url|}}
   {{#each (get_methods_obj path)}}
-    {{operationId}}: {{{render_template 'Route.hbs' this}}},
+    {{operationId}}: {{{render_template 'ValidationRoute.hbs' this}}},
   {{/each}}
 {{/each}}
 };

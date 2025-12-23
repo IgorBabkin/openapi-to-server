@@ -3,7 +3,7 @@ import fs from 'fs';
 import * as path from 'path';
 
 const inputFile = path.resolve(__dirname, './swagger.yaml');
-const outputFile = path.resolve(__dirname, '../../.generated/server.d.ts');
+const outputFile = path.resolve(__dirname, '../../.generated/server.ts');
 
 describe('openapiToServer', () => {
   it('should generate server types from OpenAPI spec', () => {
