@@ -1,10 +1,10 @@
 import './helpers';
-import * as Handlebars from 'handlebars/runtime';
+import Handlebars from 'handlebars/runtime';
 import { OpenAPIV3 } from 'openapi-types';
 
-require('../../../precompiled/validation.js');
+require('../../../precompiled/server.js');
 
-function renderTemplate(filename: string, data: unknown) {
+export function renderTemplate(filename: string, data: unknown) {
   const template = Handlebars.templates[filename];
   if (!template) {
     throw new Error(`Template not found: ${filename}`);
@@ -13,5 +13,3 @@ function renderTemplate(filename: string, data: unknown) {
 }
 
 Handlebars.registerHelper('render_template', renderTemplate);
-
-export const renderDocument = (doc: OpenAPIV3.Document) => renderTemplate('Document.hbs', doc);
