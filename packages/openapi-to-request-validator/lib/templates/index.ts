@@ -59,3 +59,13 @@ Handlebars.registerHelper('get_methods_obj', function (item: OpenAPIV3.PathItemO
   item.get && (output['get'] = item.get);
   return output;
 });
+
+export function renderTemplate(filename: string, data: unknown) {
+  const template = Handlebars.templates[filename];
+  if (!template) {
+    throw new Error(`Template not found: ${filename}`);
+  }
+  return template(data);
+}
+
+Handlebars.registerHelper('render_template', renderTemplate);

@@ -12,7 +12,8 @@
     "rootDir": "./lib",
     "outDir": "./cjm",
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
   },
   "include": [
     "lib"
