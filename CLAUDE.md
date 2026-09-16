@@ -8,9 +8,9 @@ pnpm monorepo of TypeScript code generators that turn OpenAPI 3.0 specs into typ
 
 | Package | Published | Purpose |
 | --- | --- | --- |
-| `@ibabkin/openapi-to-server` | yes | Renders TypeScript types, `Route`/payload/response types, per-tag controller interfaces and an `IServer` interface |
-| `@ibabkin/openapi-to-zod` | yes | Renders Zod schemas for components and a `PAYLOADS` map (keyed by `operationId`) that validates the Express `Request` |
-| `@ibabkin/openapi-express-server` | no (`private`) | `extractRoutes`, `convertOpenAPIPathToExpress`, `buildPayload`, `containerMiddleware` (ts-ioc-container request scope). A reference `RouteBuilder` lives in its `__tests__/` |
+| `@ibabkin/openapi-to-server` | yes | Renders TypeScript types, `Route`/payload/response types, per-tag controller interfaces, an `IServer` interface and an Axios `ApiClient`; ships the `openapi-to-server` / `openapi-to-client` CLIs and the `createUrl` runtime helper used by generated clients |
+| `@ibabkin/openapi-to-zod` | yes | Renders Zod schemas for components and a `PAYLOADS` map (keyed by `operationId`) that validates the Express `Request`; ships the `openapi-to-zod` CLI |
+| `@ibabkin/openapi-express-server` | yes | `extractRoutes`, `convertOpenAPIPathToExpress`, `buildPayload`, `containerMiddleware` (ts-ioc-container request scope). A reference `RouteBuilder` lives in its `__tests__/` |
 
 All packages are ESM (`"type": "module"`), compiled with `tsc -p tsconfig.prod.json` into `esm/`. Node `>=26` (see `.nvmrc`).
 
@@ -29,8 +29,15 @@ pnpm release:dry-run # preview what the release pipeline would do
 cd packages/openapi-to-request-validator
 npm run build:hbs    # precompile lib/templates/*.hbs into hbs/index.cjs
 npm run build:ts
-npx jest __tests__/index.spec.ts
+npx jest __tests__/openapiToZod.spec.ts
+
+# CLIs (after pnpm build)
+node packages/openapi-to-server-interface/bin/openapi-to-server.js --input swagger.yaml --output operations.d.ts --json
+node packages/openapi-to-server-interface/bin/openapi-to-client.js --input swagger.yaml --output client.ts
+node packages/openapi-to-request-validator/bin/openapi-to-zod.js --input swagger.yaml --output validators.ts
 ```
+
+A consumer wiring all three together (`generate` script, `RouteMediator`, DI-resolved route handlers) is `~/projects/backend-template`.
 
 ## Architecture
 
@@ -41,8 +48,9 @@ OpenAPIV3.Document → Handlebars templates (lib/templates/*.hbs) → TypeScript
                        ↑ helpers registered in lib/templates/index.ts
 ```
 
-- Templates are precompiled by the `handlebars` CLI into `hbs/index.cjs` (gitignored, regenerated on `postinstall` and `build`). `lib/index.ts` imports it for its side effect of registering `Handlebars.templates`.
-- Both `hbs/index.cjs` and `lib/templates/index.ts` import the main `handlebars` entry so they share one Handlebars instance.
+- Templates are precompiled by the `handlebars` CLI into `hbs/index.cjs` (gitignored, regenerated on `postinstall` and `build`). `lib/render.ts` imports it for its side effect of registering `Handlebars.templates`.
+- Both `hbs/index.cjs` and `lib/templates/index.ts` import the main `handlebars` entry so they share one Handlebars instance. Both packages register a `render_template` helper on that shared instance; this only works because all precompiled templates of both packages live in the one global `Handlebars.templates` map — loading templates per package at runtime would need isolated `Handlebars.create()` environments.
+- File-based entry points (`openapiToServer`, `openapiToClient`, `openapiToZod` in `lib/useCases/`) load YAML through `yaml-import` (supports `!!import/merge`) or JSON, and the `lib/bin/*.ts` CLIs parse `--input/--output[/--json]` with `node:util` `parseArgs`. `package.json` `bin` points at committed one-line shims in `bin/` (they must exist at install time for pnpm to link them into dependants' `node_modules/.bin`), which import the compiled `esm/bin/*.js`.
 - `render_template` returns a `Handlebars.SafeString` — generated code is not HTML, so nested output must not be escaped.
 - Operations are grouped by `tags[0]`; `operationId` drives method and type names (`getUser` → `GetUserPayload`, `GetUserResponse`, `GetUserRoute`).
 - Parameters without `required: true` and object properties not listed in `required` are optional. String schemas map `enum` → `z.enum`, `format: email` → `.email()`, `minLength`/`maxLength` → `.min()`/`.max()`, `date-time` → `zDate`.
@@ -56,6 +64,7 @@ OpenAPIV3.Document → Handlebars templates (lib/templates/*.hbs) → TypeScript
 - **Jest resolves workspace packages to sources**: `openapi-express-server/jest.config.json` maps `@ibabkin/*` to `../<pkg>/lib/index.ts`, so tests don't need a prior build of the sibling packages (they do need `hbs/`, produced on install).
 - **ts-ioc-container**: `container.hasRegistration(key)` only sees entries added with `addRegistration(Registration.fromClass(X).bindToKey(key))`, not `register(key, Provider)`. Decorated classes need `import 'reflect-metadata'` first.
 - After editing `.hbs` files run `npm run build:hbs` (or `pnpm build`) before running tests against `esm/`.
+- Generated output is consumed by `backend-template` with `^` ranges; changes to generated shapes or to the runtime exports (`createUrl`, `HttpResponse`, `Route`, …) are breaking for it and need a major bump.
 
 ## Commits and Releases
 
