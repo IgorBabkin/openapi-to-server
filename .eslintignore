@@ -5,3 +5,4 @@ coverage
 .idea
 packages/openapi-express-server/__tests__/controller-interfaces.ts
 packages/openapi-express-server/__tests__/validators.ts
+packages/openapi-to-request-validator/__tests__/generated
