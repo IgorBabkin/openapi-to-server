@@ -18,7 +18,8 @@
     "lint:fix": "pnpm lint --fix",
     "test": "pnpm -r run test",
     "build": "pnpm -r run build",
-    "release:dry-run": "RELEASE_CONTEXT=$(monorepo-semantic-release report) && monorepo-semantic-release package-json --dry-run --context \"$RELEASE_CONTEXT\" && monorepo-semantic-release package-manager --dry-run --context \"$RELEASE_CONTEXT\" && monorepo-semantic-release changelog --dry-run --context \"$RELEASE_CONTEXT\" && monorepo-semantic-release vcs --dry-run --context \"$RELEASE_CONTEXT\"",
+    "release:package-json": "monorepo-semantic-release package-json",
+    "release:dry-run": "RELEASE_CONTEXT=$(monorepo-semantic-release report) && pnpm run release:package-json --dry-run --context \"$RELEASE_CONTEXT\" && monorepo-semantic-release package-manager --dry-run --context \"$RELEASE_CONTEXT\" && monorepo-semantic-release changelog --dry-run --context \"$RELEASE_CONTEXT\" && monorepo-semantic-release vcs --dry-run --context \"$RELEASE_CONTEXT\"",
     "prepare": "husky"
   },
   "config": {

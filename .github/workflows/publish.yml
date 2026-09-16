@@ -135,7 +135,7 @@ jobs:
           echo "RELEASE_CONTEXT=$RELEASE_CONTEXT" >> "$GITHUB_ENV"
 
       - name: Update internal dependency versions
-        run: pnpm exec monorepo-semantic-release package-json --context "$RELEASE_CONTEXT"
+        run: pnpm run release:package-json --context "$RELEASE_CONTEXT"
 
       - name: Bump versions
         run: pnpm exec monorepo-semantic-release package-manager --context "$RELEASE_CONTEXT"
