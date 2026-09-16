@@ -32,9 +32,9 @@ npm run build:ts
 npx jest __tests__/openapiToZod.spec.ts
 
 # CLIs (after pnpm build)
-node packages/openapi-to-server-interface/esm/bin/openapi-to-server.js --input swagger.yaml --output operations.d.ts --json
-node packages/openapi-to-server-interface/esm/bin/openapi-to-client.js --input swagger.yaml --output client.ts
-node packages/openapi-to-request-validator/esm/bin/openapi-to-zod.js --input swagger.yaml --output validators.ts
+node packages/openapi-to-server-interface/bin/openapi-to-server.js --input swagger.yaml --output operations.d.ts --json
+node packages/openapi-to-server-interface/bin/openapi-to-client.js --input swagger.yaml --output client.ts
+node packages/openapi-to-request-validator/bin/openapi-to-zod.js --input swagger.yaml --output validators.ts
 ```
 
 A consumer wiring all three together (`generate` script, `RouteMediator`, DI-resolved route handlers) is `~/projects/backend-template`.
@@ -50,7 +50,7 @@ OpenAPIV3.Document → Handlebars templates (lib/templates/*.hbs) → TypeScript
 
 - Templates are precompiled by the `handlebars` CLI into `hbs/index.cjs` (gitignored, regenerated on `postinstall` and `build`). `lib/render.ts` imports it for its side effect of registering `Handlebars.templates`.
 - Both `hbs/index.cjs` and `lib/templates/index.ts` import the main `handlebars` entry so they share one Handlebars instance. Both packages register a `render_template` helper on that shared instance; this only works because all precompiled templates of both packages live in the one global `Handlebars.templates` map — loading templates per package at runtime would need isolated `Handlebars.create()` environments.
-- File-based entry points (`openapiToServer`, `openapiToClient`, `openapiToZod` in `lib/useCases/`) load YAML through `yaml-import` (supports `!!import/merge`) or JSON, and the `lib/bin/*.ts` CLIs parse `--input/--output[/--json]` with `node:util` `parseArgs`.
+- File-based entry points (`openapiToServer`, `openapiToClient`, `openapiToZod` in `lib/useCases/`) load YAML through `yaml-import` (supports `!!import/merge`) or JSON, and the `lib/bin/*.ts` CLIs parse `--input/--output[/--json]` with `node:util` `parseArgs`. `package.json` `bin` points at committed one-line shims in `bin/` (they must exist at install time for pnpm to link them into dependants' `node_modules/.bin`), which import the compiled `esm/bin/*.js`.
 - `render_template` returns a `Handlebars.SafeString` — generated code is not HTML, so nested output must not be escaped.
 - Operations are grouped by `tags[0]`; `operationId` drives method and type names (`getUser` → `GetUserPayload`, `GetUserResponse`, `GetUserRoute`).
 - Parameters without `required: true` and object properties not listed in `required` are optional. String schemas map `enum` → `z.enum`, `format: email` → `.email()`, `minLength`/`maxLength` → `.min()`/`.max()`, `date-time` → `zDate`.
