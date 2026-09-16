@@ -26,8 +26,8 @@ export default {
       2,
       'always',
       [
-        '@ibabkin/openapi-to-server-interface',
-        '@ibabkin/openapi-to-request-validator',
+        '@ibabkin/openapi-to-server',
+        '@ibabkin/openapi-to-zod',
         '@ibabkin/openapi-express-server',
 
         'templates',
