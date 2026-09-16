@@ -1,0 +1,155 @@
+name: publish
+
+on:
+  push:
+    branches:
+      - master
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  id-token: write # OIDC trusted publishing to npm
+  contents: write # release commit, tags, GitHub releases
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Cache pnpm store
+        uses: ./.github/actions/cache-pnpm-store
+
+      - name: Install dependencies
+        run: pnpm run ci
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Format check
+        run: pnpm run format:check
+
+      # Paths inside the tarball are repo-root relative, so unpacking restores
+      # every package's esm/ and hbs/ exactly where its `files` globs expect.
+      - name: Archive build output
+        run: tar -czf build-output.tar.gz packages/*/esm packages/*/hbs
+
+      - name: Upload build output
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          retention-days: 1
+          path: build-output.tar.gz
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Cache pnpm store
+        uses: ./.github/actions/cache-pnpm-store
+
+      - name: Install dependencies
+        run: pnpm run ci
+
+      - name: Download build output
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+
+      - name: Unarchive build output
+        run: tar -xzf build-output.tar.gz && rm build-output.tar.gz
+
+      - name: Test
+        run: pnpm test
+
+  release:
+    needs: [build, test]
+    environment:
+      name: production
+      url: https://www.npmjs.com/org/ibabkin
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0 # `report` walks history back to each package's last release tag
+          token: ${{ github.token }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+        # OIDC publishing needs npm >= 11.5.1 (bundled with the Node in .nvmrc)
+        # and Trusted Publishing configured for each package on npmjs.com.
+
+      - name: Cache pnpm store
+        uses: ./.github/actions/cache-pnpm-store
+
+      - name: Install dependencies
+        run: pnpm run ci
+
+      - name: Download build output
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+
+      - name: Unarchive build output
+        run: tar -xzf build-output.tar.gz && rm build-output.tar.gz
+
+      - name: Configure Git
+        uses: ./.github/actions/configure-git
+
+      - name: Generate release context
+        run: |
+          RELEASE_CONTEXT=$(pnpm exec monorepo-semantic-release report)
+          echo "RELEASE_CONTEXT=$RELEASE_CONTEXT" >> "$GITHUB_ENV"
+
+      - name: Update internal dependency versions
+        run: pnpm exec monorepo-semantic-release package-json --context "$RELEASE_CONTEXT"
+
+      - name: Bump versions
+        run: pnpm exec monorepo-semantic-release package-manager --context "$RELEASE_CONTEXT"
+
+      - name: Generate changelogs
+        run: pnpm exec monorepo-semantic-release changelog --context "$RELEASE_CONTEXT"
+
+      - name: Commit, tag and push
+        run: pnpm exec monorepo-semantic-release vcs --context "$RELEASE_CONTEXT"
+
+      - name: Publish to npm
+        run: pnpm exec monorepo-semantic-release package-manager publish --context "$RELEASE_CONTEXT"
+
+      - name: Create GitHub releases
+        run: pnpm exec monorepo-semantic-release release-notes --context "$RELEASE_CONTEXT"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}

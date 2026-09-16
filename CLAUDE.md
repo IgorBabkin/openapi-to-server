@@ -4,233 +4,72 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a **TypeScript-based OpenAPI code generation framework** that converts OpenAPI 3.0 specifications into type-safe TypeScript code. The project uses a Lerna monorepo with pnpm workspaces.
+pnpm monorepo of TypeScript code generators that turn OpenAPI 3.0 specs into type-safe server code, plus Express glue:
 
-**Main Package**: `@ibabkin/openapi-to-server` - Generates server interfaces, client code, and Zod validation schemas from OpenAPI specs.
+| Package | Published | Purpose |
+| --- | --- | --- |
+| `@ibabkin/openapi-to-server-interface` | yes | Renders TypeScript types, `Route`/payload/response types, per-tag controller interfaces and an `IServer` interface |
+| `@ibabkin/openapi-to-request-validator` | yes | Renders Zod schemas for components and a `PAYLOADS` map (keyed by `operationId`) that validates the Express `Request` |
+| `@ibabkin/openapi-express-server` | no (`private`) | `extractRoutes`, `convertOpenAPIPathToExpress`, `buildPayload`, `containerMiddleware` (ts-ioc-container request scope). A reference `RouteBuilder` lives in its `__tests__/` |
 
-## Development Commands
+All packages are ESM (`"type": "module"`), compiled with `tsc -p tsconfig.prod.json` into `esm/`. Node `>=26` (see `.nvmrc`).
 
-### Root-level Commands
+## Commands
+
 ```bash
-# Build all packages
-pnpm build
-
-# Run all tests
-pnpm test
-
-# Lint code
+pnpm ci              # pnpm install --frozen-lockfile
+pnpm build           # pnpm -r run build (clean → precompile templates → tsc)
+pnpm test            # pnpm -r run test
 pnpm lint
-pnpm lint:fix
+pnpm format:check
+pnpm commit          # commitizen prompt producing a conventional commit
+pnpm release:dry-run # preview what the release pipeline would do
 
-# Format code
-pnpm format
-
-# Watch mode (package-level)
-cd packages/openapi-framework
-npm run watch
-
-# Run single test file
-cd packages/openapi-framework
-npx jest __tests__/swagger.spec.ts
+# Per package
+cd packages/openapi-to-request-validator
+npm run build:hbs    # precompile lib/templates/*.hbs into hbs/index.cjs
+npm run build:ts
+npx jest __tests__/index.spec.ts
 ```
 
-### Package-level Commands (openapi-framework)
-```bash
-# Build
-npm run build              # Full build (clean + compile)
-npm run compile            # TypeScript compilation only
-npm run hbs:compile        # Precompile all Handlebars templates
-npm run hbs:compile:server # Precompile server templates only
-npm run hbs:compile:validation # Precompile validation templates only
+## Architecture
 
-# Test
-npm run test               # Run all tests with Jest
-npm run test:watch         # Watch mode with coverage
+Both generators follow the same pipeline:
 
-# Clean
-npm run clean              # Remove compiled output
+```
+OpenAPIV3.Document → Handlebars templates (lib/templates/*.hbs) → TypeScript source string
+                       ↑ helpers registered in lib/templates/index.ts
 ```
 
-### Programmatic API Usage
-```typescript
-import { openapiToServer, openapiToClient } from '@ibabkin/openapi-to-server';
-import { openapiToZod } from '@ibabkin/openapi-to-server/validation';
+- Templates are precompiled by the `handlebars` CLI into `hbs/index.cjs` (gitignored, regenerated on `postinstall` and `build`). `lib/index.ts` imports it for its side effect of registering `Handlebars.templates`.
+- Both `hbs/index.cjs` and `lib/templates/index.ts` import the main `handlebars` entry so they share one Handlebars instance.
+- `render_template` returns a `Handlebars.SafeString` — generated code is not HTML, so nested output must not be escaped.
+- Operations are grouped by `tags[0]`; `operationId` drives method and type names (`getUser` → `GetUserPayload`, `GetUserResponse`, `GetUserRoute`).
+- Parameters without `required: true` and object properties not listed in `required` are optional. String schemas map `enum` → `z.enum`, `format: email` → `.email()`, `minLength`/`maxLength` → `.min()`/`.max()`, `date-time` → `zDate`.
 
-// Generate server types
-openapiToServer({
-  inputFile: './swagger.yaml',
-  outputFile: './operations.d.ts',
-  emitJSON: true  // Optional: emit JSON alongside TypeScript
-});
+`openapi-express-server` tests exercise both generators end to end: `__tests__/integration/generated.spec.ts` renders types and validators from `__tests__/integration/api.yaml` at test time, builds an Express app, and runs requests through it.
 
-// Generate client code
-openapiToClient({
-  inputFile: './swagger.yaml',
-  outputFile: './client.ts'
-});
+## Gotchas
 
-// Generate Zod validation schemas
-openapiToZod({
-  inputFile: './swagger.yaml',
-  outputFile: './validation.ts'
-});
+- **ESM output must be loadable by Node**: relative imports in `lib/` need explicit `.js` extensions; Jest maps them back to `.ts` via `moduleNameMapper` (`^(\.{1,2}/.*)\.js$`).
+- **`tsc` + `incremental`**: `clean` must delete `*.tsbuildinfo` as well as `esm/`, otherwise `tsc` believes it is up to date and emits nothing after the output is removed.
+- **Jest resolves workspace packages to sources**: `openapi-express-server/jest.config.json` maps `@ibabkin/*` to `../<pkg>/lib/index.ts`, so tests don't need a prior build of the sibling packages (they do need `hbs/`, produced on install).
+- **ts-ioc-container**: `container.hasRegistration(key)` only sees entries added with `addRegistration(Registration.fromClass(X).bindToKey(key))`, not `register(key, Provider)`. Decorated classes need `import 'reflect-metadata'` first.
+- After editing `.hbs` files run `npm run build:hbs` (or `pnpm build`) before running tests against `esm/`.
+
+## Commits and Releases
+
+Commits must follow Conventional Commits and pass `commitlint.config.mjs` (enforced by the husky `commit-msg` hook). **Scope is mandatory** and, for release-triggering commits, must equal the package's `name` exactly:
+
+```
+feat(@ibabkin/openapi-to-request-validator): support enum constraints   # minor
+fix(@ibabkin/openapi-to-server-interface): mark unrequired params optional # patch
+ci(github): ...   chore(deps): ...   docs(templates): ...                   # no release
 ```
 
-## Architecture Overview
-
-### Code Generation Pipeline
-
-The framework uses **Handlebars templates** to transform OpenAPI specifications into TypeScript code. The generation is split into three distinct outputs:
-
-1. **Components.ts.hbs** → Type definitions, routes, operations
-2. **Controllers.ts.hbs** → Controller interfaces grouped by OpenAPI tags
-3. **IServer.ts.hbs** → Root server interface binding all controllers
-
-**Generation Flow**:
-```
-OpenAPI YAML → Parse → Handlebars Templates → TypeScript Output
-                ↓
-            Custom Helpers (grouping, filtering, naming)
-```
-
-### Template System
-
-Templates are located in `packages/openapi-framework/lib/server/templates/`:
-
-- **Components.ts.hbs**: Generates schemas, payload types, response types, and route interfaces
-- **Controllers.ts.hbs**: Generates controller interfaces (e.g., `IHealthController`, `ITodosController`)
-- **IServer.ts.hbs**: Generates main server interface with constructor references
-- **ServerRoute.hbs**: Individual route payload/response type generation
-- **JsonSchema.hbs**: Recursively converts OpenAPI schemas to TypeScript types
-- **Parameters.hbs**: Converts parameter definitions to TypeScript types
-- **Client.hbs**: Generates Axios-based API client
-
-**Template Precompilation**: Templates are precompiled during build into separate files:
-```bash
-# Server templates
-handlebars lib/server/templates/*.hbs -f precompiled/server.js -c handlebars/runtime
-
-# Validation templates
-handlebars lib/validation/templates/*.hbs -f precompiled/validation.js -c handlebars/runtime
-```
-
-The split allows:
-- Faster incremental builds (only recompile changed template groups)
-- Better code organization (server vs validation concerns separated)
-- Smaller bundle sizes when using only one generator
-
-### Custom Handlebars Helpers
-
-Located in `lib/server/templates/helpers.ts`:
-
-- **`group_by_tags(paths)`**: Groups operations by their first OpenAPI tag (used for controller generation)
-- **`controller_name(tag)`**: Converts tag to controller name (e.g., "Health" → "IHealthController")
-- **`payload_name(operationId)`**: Generates payload type name (e.g., "getUser" → "GetUserPayload")
-- **`response_name(operationId)`**: Generates response type name (e.g., "getUser" → "GetUserResponse")
-- **`route_name(operationId)`**: Generates route interface name (e.g., "getUser" → "GetUserRoute")
-- **`filter_parameters(list, location)`**: Filters parameters by location (query, path, body)
-- **`render_template(filename, data)`**: Recursively renders nested templates
-
-### Generated Code Structure
-
-From an OpenAPI spec with tags `Health` and `Todos`, the output structure is:
-
-```typescript
-// Components (schemas, routes, operations)
-export type HealthResponse = { status: "ok" };
-export type GetHealthPayload = {};
-export interface GetHealthResponse extends HttpResponse { ... }
-export interface GetHealthRoute extends Route<GetHealthPayload, GetHealthResponse> {}
-export type Operations = { getHealth: GetHealthRoute; ... }
-
-// Controllers (one per tag)
-export interface IHealthController {
-  getHealth(payload: GetHealthPayload): Promise<GetHealthResponse>;
-  getHealthDb(payload: GetHealthDbPayload): Promise<GetHealthDbResponse>;
-}
-
-export interface ITodosController {
-  getTodos(payload: GetTodosPayload): Promise<GetTodosResponse>;
-  createTodo(payload: CreateTodoPayload): Promise<CreateTodoResponse>;
-  // ... more methods
-}
-
-// Server interface (binds all controllers)
-export interface IServer {
-  Health: constructor<IHealthController>;
-  Todos: constructor<ITodosController>;
-}
-```
-
-### Key Implementation Details
-
-**OpenAPI Tag → Controller Mapping**:
-- Each unique tag in the OpenAPI spec creates a separate controller interface
-- Operations are grouped by their **first tag only** (`tags[0]`)
-- Tag names are capitalized and prefixed with "I" (e.g., "todos" → "ITodosController")
-
-**Type Generation**:
-- JSON Schema references (`$ref`) are resolved to type names
-- OpenAPI formats are mapped: `date-time` → `Date`, others → primitive types
-- Optional properties use `?` suffix
-- Arrays use `Type[]` syntax
-- Objects are inlined or referenced by schema name
-
-**File Writing Strategy** (in `openapiToServer.ts`):
-```typescript
-// Appends three sections to output file
-fs.writeFileSync(outputFile, renderComponents(content), { flag: 'a' });  // Components first
-fs.writeFileSync(outputFile, renderControllers(content), { flag: 'a' }); // Controllers second
-fs.writeFileSync(outputFile, renderServer(content), { flag: 'a' });      // Server last
-```
-
-### Important Patterns
-
-**YAML Import Support**:
-The framework supports `yaml-import` syntax for modular OpenAPI specs:
-```yaml
-paths:
-  !!import/merge
-    - paths.yaml
-components:
-  schemas:
-    !!import/merge
-      - components.yaml
-```
-
-**Testing Strategy**:
-- Uses Jest with snapshot testing
-- Generated code is output to `.generated/` directory during tests
-- Snapshots detect regressions in template changes
-- Test files: `__tests__/swagger.spec.ts`
-
-**Build Output**:
-- TypeScript compiled to CommonJS in `cjm/` directory
-- Type definitions in `cjm/*.d.ts`
-- Precompiled templates split into:
-  - `precompiled/server.js` - Server/client template functions
-  - `precompiled/validation.js` - Zod validation template functions
-- Only `cjm/` and `precompiled/` are published to npm
-
-## Common Gotchas
-
-1. **Template Registration**: When adding new templates, update:
-   - For server templates: `lib/server/templates/index.ts` (export render function) and `lib/server/useCases/openapiToServer.ts` (call render function)
-   - For validation templates: `lib/validation/templates/index.ts` and corresponding use case
-
-2. **Handlebars Precompilation**: After modifying `.hbs` files, run `npm run hbs:compile` (or `hbs:compile:server`/`hbs:compile:validation` for specific templates) before testing
-
-3. **Template Loading**: Server templates require `precompiled/server.js`, validation templates require `precompiled/validation.js`. Each index.ts loads its corresponding precompiled file.
-
-4. **Response Status Codes**: Currently handles: 200 (OK), 201 (Created), 204 (No Content), 302 (Found). Add new status codes in `ServerRoute.hbs` if needed.
-
-5. **Helper Registration**: Custom helpers must be registered in their respective `helpers.ts` files before use in templates
-
-6. **Lerna Publishing**: Use `pnpm release` (builds, tests, then publishes) not `pnpm release:publish` directly
+Releases run on push to `master` via `.github/workflows/publish.yml` using `release-monorepo-semantically` (step pipeline: `report → package-json → package-manager → changelog → vcs → package-manager publish → release-notes`). Configuration lives in `.release.json`; the release commit template is `scripts/release/templates/release-commit-msg.hbs`. Tags are `<package-name>@<version>`; private packages are never released. Publishing uses npm Trusted Publishing (OIDC), which must be configured per package on npmjs.com.
 
 ## Code Style
 
-- **Prettier**: 120 char line width, single quotes, trailing commas
-- **ESLint**: TypeScript strict mode with Prettier integration
-- **Commits**: Use `pnpm commit` for conventional commits via Commitizen
-- **Hooks**: Husky runs lint-staged on pre-commit (eslint + prettier on staged files)
+- Prettier: 120 char line width, single quotes, trailing commas
+- ESLint: TypeScript strict with Prettier integration; lint-staged runs on pre-commit

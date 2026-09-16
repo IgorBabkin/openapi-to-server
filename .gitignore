@@ -17,3 +17,6 @@ precompiled
 # Yarn (deprecated - migrated to pnpm)
 # .yarn/cache
 # .yarn/install-state.gz
+
+*.tsbuildinfo
+hbs
