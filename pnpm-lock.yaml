@@ -47,12 +47,12 @@ importers:
 
   packages/openapi-express-server:
     dependencies:
-      '@ibabkin/openapi-to-request-validator':
-        specifier: workspace:*
-        version: link:../openapi-to-request-validator
-      '@ibabkin/openapi-to-server-interface':
+      '@ibabkin/openapi-to-server':
         specifier: workspace:*
         version: link:../openapi-to-server-interface
+      '@ibabkin/openapi-to-zod':
+        specifier: workspace:*
+        version: link:../openapi-to-request-validator
       express:
         specifier: ^4.18.2
         version: 4.22.1

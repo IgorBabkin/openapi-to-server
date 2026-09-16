@@ -8,8 +8,8 @@ pnpm monorepo of TypeScript code generators that turn OpenAPI 3.0 specs into typ
 
 | Package | Published | Purpose |
 | --- | --- | --- |
-| `@ibabkin/openapi-to-server-interface` | yes | Renders TypeScript types, `Route`/payload/response types, per-tag controller interfaces and an `IServer` interface |
-| `@ibabkin/openapi-to-request-validator` | yes | Renders Zod schemas for components and a `PAYLOADS` map (keyed by `operationId`) that validates the Express `Request` |
+| `@ibabkin/openapi-to-server` | yes | Renders TypeScript types, `Route`/payload/response types, per-tag controller interfaces and an `IServer` interface |
+| `@ibabkin/openapi-to-zod` | yes | Renders Zod schemas for components and a `PAYLOADS` map (keyed by `operationId`) that validates the Express `Request` |
 | `@ibabkin/openapi-express-server` | no (`private`) | `extractRoutes`, `convertOpenAPIPathToExpress`, `buildPayload`, `containerMiddleware` (ts-ioc-container request scope). A reference `RouteBuilder` lives in its `__tests__/` |
 
 All packages are ESM (`"type": "module"`), compiled with `tsc -p tsconfig.prod.json` into `esm/`. Node `>=26` (see `.nvmrc`).
@@ -62,8 +62,8 @@ OpenAPIV3.Document → Handlebars templates (lib/templates/*.hbs) → TypeScript
 Commits must follow Conventional Commits and pass `commitlint.config.mjs` (enforced by the husky `commit-msg` hook). **Scope is mandatory** and, for release-triggering commits, must equal the package's `name` exactly:
 
 ```
-feat(@ibabkin/openapi-to-request-validator): support enum constraints   # minor
-fix(@ibabkin/openapi-to-server-interface): mark unrequired params optional # patch
+feat(@ibabkin/openapi-to-zod): support enum constraints   # minor
+fix(@ibabkin/openapi-to-server): mark unrequired params optional # patch
 ci(github): ...   chore(deps): ...   docs(templates): ...                   # no release
 ```
 
