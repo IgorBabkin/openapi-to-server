@@ -68,12 +68,13 @@ OpenAPIV3.Document → Handlebars templates (lib/templates/*.hbs) → TypeScript
 
 ## Commits and Releases
 
-Commits must follow Conventional Commits and pass `commitlint.config.mjs` (enforced by the husky `commit-msg` hook). **Scope is mandatory** and, for release-triggering commits, must equal the package's `name` exactly:
+Commits must follow Conventional Commits and pass `commitlint.config.mjs` (enforced by the husky `commit-msg` hook). **Scope is mandatory** and, for release-triggering commits, must equal the package's `name` exactly. Dependency changes in a published package's `package.json` must use a release-triggering `fix` or `feat` commit scoped to that package; do not use non-release `chore(deps)` for those changes:
 
 ```
 feat(@ibabkin/openapi-to-zod): support enum constraints   # minor
 fix(@ibabkin/openapi-to-server): mark unrequired params optional # patch
-ci(github): ...   chore(deps): ...   docs(templates): ...                   # no release
+fix(@ibabkin/openapi-to-zod): upgrade dependencies       # patch
+ci(github): ...   chore(deps): ...   docs(templates): ...  # no release
 ```
 
 Releases run on push to `master` via `.github/workflows/publish.yml` using `release-monorepo-semantically` (step pipeline: `report → package-json → package-manager → changelog → vcs → package-manager publish → release-notes`). Configuration lives in `.release.json`; the release commit template is `scripts/release/templates/release-commit-msg.hbs`. Tags are `<package-name>@<version>`; private packages are never released. Publishing uses npm Trusted Publishing (OIDC), which must be configured per package on npmjs.com.
