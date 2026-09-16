@@ -63,8 +63,8 @@ importers:
         specifier: ^0.2.2
         version: 0.2.2
       ts-ioc-container:
-        specifier: ^46.8.0
-        version: 46.8.0
+        specifier: ^68.0.0
+        version: 68.0.0(reflect-metadata@0.2.2)
       zod:
         specifier: ^4.2.1
         version: 4.2.1
@@ -3048,11 +3048,17 @@ packages:
     resolution: {integrity: sha512-jRKj0n0jXWo6kh62nA5TEh3+4igKDXLvzBJcPpiizP7oOolUrYIxmVBG9TOtHYFHoddUk6YvAkGeGoSVTXfQXQ==}
     engines: {node: '>=12'}
 
-  ts-ioc-container@46.8.0:
-    resolution: {integrity: sha512-T7+fi3MBiCgIv9KvPq0nTEHvrrTHbMvIfwUhAhqC1dOAwe6eetwqYCR3KfoiVFCCV4rm3xhplPCeuks747oBnQ==}
-
   ts-ioc-container@56.3.0:
     resolution: {integrity: sha512-2ea9vtlGFSV/t45trdW28bRICV1pTqtGVNoNaUKHjxKwa9perD+i7P+pNkmfIKPpC2GFA1lRseiTP1nKugdNZw==}
+    engines: {node: '>= 18'}
+    peerDependencies:
+      reflect-metadata: ^0.2.0
+    peerDependenciesMeta:
+      reflect-metadata:
+        optional: true
+
+  ts-ioc-container@68.0.0:
+    resolution: {integrity: sha512-mDFrjPwryAE6JiJ89h9t3n7W98ha+YhicHrLJ8gbPFRaN72GZqYVwhHAw83CWK3/UUSXTBRpw4VL7XBwS6yKLQ==}
     engines: {node: '>= 18'}
     peerDependencies:
       reflect-metadata: ^0.2.0
@@ -6529,9 +6535,11 @@ snapshots:
 
   trim-newlines@4.1.1: {}
 
-  ts-ioc-container@46.8.0: {}
-
   ts-ioc-container@56.3.0(reflect-metadata@0.2.2):
+    optionalDependencies:
+      reflect-metadata: 0.2.2
+
+  ts-ioc-container@68.0.0(reflect-metadata@0.2.2):
     optionalDependencies:
       reflect-metadata: 0.2.2
 
