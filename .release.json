@@ -4,5 +4,14 @@
   },
   "package-manager": {
     "kind": "pnpm"
+  },
+  "report": {
+    "bumps": {
+      "patch": [
+        { "type": "fix", "scope": "<package>" },
+        { "type": "perf", "scope": "<package>" },
+        { "type": "docs", "scope": "config", "packages": "*" }
+      ]
+    }
   }
 }
