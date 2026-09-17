@@ -8,7 +8,7 @@ pnpm monorepo of TypeScript code generators that turn OpenAPI 3.0 specs into typ
 
 | Package | Published | Purpose |
 | --- | --- | --- |
-| `@ibabkin/openapi-to-server` | yes | Renders TypeScript types, `Route`/payload/response types, per-tag controller interfaces, an `IServer` interface and an Axios `ApiClient`; ships the `openapi-to-server` / `openapi-to-client` CLIs and the `createUrl` runtime helper used by generated clients |
+| `@ibabkin/openapi-to-server` | yes | Renders TypeScript types, payload/response types, one `<Op>UseCase` interface per operation, an `IServer` interface keyed by `operationId` and an Axios `ApiClient`; ships the `openapi-to-server` / `openapi-to-client` CLIs and the `createUrl` runtime helper used by generated clients |
 | `@ibabkin/openapi-to-zod` | yes | Renders Zod schemas for components and a `PAYLOADS` map (keyed by `operationId`) that validates the Express `Request`; ships the `openapi-to-zod` CLI |
 | `@ibabkin/openapi-express-server` | yes | `extractRoutes`, `convertOpenAPIPathToExpress`, `buildPayload`, `containerMiddleware` (ts-ioc-container request scope). A reference `RouteBuilder` lives in its `__tests__/` |
 
@@ -42,8 +42,8 @@ A consumer wiring all three together (`generate` script, `RouteMediator`, DI-res
 ## Specs
 
 Cross-package behaviour is specified in `specs/` before it is implemented, and the tests that
-assert it name the spec (`describe('SPEC-001 · controller naming', …)`) and cite the requirement
-ID (`// CN-3`). `specs/README.md` has the workflow: amend the spec, write the failing test, then
+assert it name the spec (`describe('SPEC-007 · use case per operation', …)`) and cite the requirement
+ID (`// UC-4`). `specs/README.md` has the workflow: amend the spec, write the failing test, then
 implement — and amend the spec in the same commit as any behaviour change.
 
 ## Architecture
@@ -59,10 +59,11 @@ OpenAPIV3.Document → Handlebars templates (lib/templates/*.hbs) → TypeScript
 - Both `hbs/index.cjs` and `lib/templates/index.ts` import the main `handlebars` entry so they share one Handlebars instance. Both packages register a `render_template` helper on that shared instance; this only works because all precompiled templates of both packages live in the one global `Handlebars.templates` map — loading templates per package at runtime would need isolated `Handlebars.create()` environments.
 - File-based entry points (`openapiToServer`, `openapiToClient`, `openapiToZod` in `lib/useCases/`) load YAML through `yaml-import` (supports `!!import/merge`) or JSON, and the `lib/bin/*.ts` CLIs parse `--input/--output[/--json]` with `node:util` `parseArgs`. `package.json` `bin` points at committed one-line shims in `bin/` (they must exist at install time for pnpm to link them into dependants' `node_modules/.bin`), which import the compiled `esm/bin/*.js`.
 - `render_template` returns a `Handlebars.SafeString` — generated code is not HTML, so nested output must not be escaped.
-- Operations are grouped by `tags[0]`, normalised into a TypeScript identifier by the shared `toIdentifier`
-  (`@ibabkin/openapi-to-server/identifier`) that also builds `routeExtractor`'s DI key — see
-  [SPEC-001](specs/SPEC-001-controller-naming.md). `operationId` drives method and type names (`getUser` →
-  `GetUserPayload`, `GetUserResponse`, `GetUserRoute`) and is **not** normalised.
+- There are no controllers: every operation is its own use case and `operationId` is its only name — it drives the
+  type names (`getUser` → `GetUserPayload`, `GetUserResponse`, `GetUserUseCase`), keys `IServer` / `Operations` /
+  `PAYLOADS` and is the DI key `routeExtractor` reports; it is **not** normalised. Tags name nothing; the runtime
+  attaches them to the request scope (`containerMiddleware(container, route.tags)`) so middleware can be bound per
+  domain — see [SPEC-007](specs/SPEC-007-use-case-per-operation.md).
 - Parameters without `required: true` and object properties not listed in `required` are optional. String schemas map `enum` → `z.enum`, `format: email` → `.email()`, `minLength`/`maxLength` → `.min()`/`.max()`, `date-time` → `zDate`.
 
 `openapi-express-server` tests exercise both generators end to end: `__tests__/integration/generated.spec.ts` renders types and validators from `__tests__/integration/api.yaml` at test time, builds an Express app, and runs requests through it.
@@ -74,7 +75,7 @@ OpenAPIV3.Document → Handlebars templates (lib/templates/*.hbs) → TypeScript
 - **Jest resolves workspace packages to sources**: `openapi-express-server/jest.config.json` maps `@ibabkin/*` to `../<pkg>/lib/index.ts`, so tests don't need a prior build of the sibling packages (they do need `hbs/`, produced on install).
 - **ts-ioc-container**: `container.hasRegistration(key)` only sees entries added with `addRegistration(Registration.fromClass(X).bindToKey(key))`, not `register(key, Provider)`. Decorated classes need `import 'reflect-metadata'` first.
 - After editing `.hbs` files run `npm run build:hbs` (or `pnpm build`) before running tests against `esm/`.
-- Generated output is consumed by `backend-template` with `^` ranges; changes to generated shapes or to the runtime exports (`createUrl`, `HttpResponse`, `Route`, …) are breaking for it and need a major bump.
+- Generated output is consumed by `backend-template` with `^` ranges; changes to generated shapes or to the runtime exports (`createUrl`, `HttpResponse`, `UseCase`, …) are breaking for it and need a major bump.
 
 ## Commits and Releases
 
