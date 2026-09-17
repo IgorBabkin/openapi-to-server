@@ -39,6 +39,13 @@ node packages/openapi-to-request-validator/bin/openapi-to-zod.js --input swagger
 
 A consumer wiring all three together (`generate` script, `RouteMediator`, DI-resolved route handlers) is `~/projects/backend-template`.
 
+## Specs
+
+Cross-package behaviour is specified in `specs/` before it is implemented, and the tests that
+assert it name the spec (`describe('SPEC-001 · controller naming', …)`) and cite the requirement
+ID (`// CN-3`). `specs/README.md` has the workflow: amend the spec, write the failing test, then
+implement — and amend the spec in the same commit as any behaviour change.
+
 ## Architecture
 
 Both generators follow the same pipeline:
@@ -52,7 +59,10 @@ OpenAPIV3.Document → Handlebars templates (lib/templates/*.hbs) → TypeScript
 - Both `hbs/index.cjs` and `lib/templates/index.ts` import the main `handlebars` entry so they share one Handlebars instance. Both packages register a `render_template` helper on that shared instance; this only works because all precompiled templates of both packages live in the one global `Handlebars.templates` map — loading templates per package at runtime would need isolated `Handlebars.create()` environments.
 - File-based entry points (`openapiToServer`, `openapiToClient`, `openapiToZod` in `lib/useCases/`) load YAML through `yaml-import` (supports `!!import/merge`) or JSON, and the `lib/bin/*.ts` CLIs parse `--input/--output[/--json]` with `node:util` `parseArgs`. `package.json` `bin` points at committed one-line shims in `bin/` (they must exist at install time for pnpm to link them into dependants' `node_modules/.bin`), which import the compiled `esm/bin/*.js`.
 - `render_template` returns a `Handlebars.SafeString` — generated code is not HTML, so nested output must not be escaped.
-- Operations are grouped by `tags[0]`; `operationId` drives method and type names (`getUser` → `GetUserPayload`, `GetUserResponse`, `GetUserRoute`).
+- Operations are grouped by `tags[0]`, normalised into a TypeScript identifier by the shared `toIdentifier`
+  (`@ibabkin/openapi-to-server/identifier`) that also builds `routeExtractor`'s DI key — see
+  [SPEC-001](specs/SPEC-001-controller-naming.md). `operationId` drives method and type names (`getUser` →
+  `GetUserPayload`, `GetUserResponse`, `GetUserRoute`) and is **not** normalised.
 - Parameters without `required: true` and object properties not listed in `required` are optional. String schemas map `enum` → `z.enum`, `format: email` → `.email()`, `minLength`/`maxLength` → `.min()`/`.max()`, `date-time` → `zDate`.
 
 `openapi-express-server` tests exercise both generators end to end: `__tests__/integration/generated.spec.ts` renders types and validators from `__tests__/integration/api.yaml` at test time, builds an Express app, and runs requests through it.
