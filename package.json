@@ -45,7 +45,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",
     "prettier": "3.9.7",
-    "release-monorepo-semantically": "1.10.0"
+    "release-monorepo-semantically": "1.12.0"
   },
   "version": "0.0.0",
   "packageManager": "pnpm@9.15.0"
