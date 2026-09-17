@@ -12,7 +12,7 @@ pnpm monorepo of TypeScript code generators that turn OpenAPI 3.0 specs into typ
 | `@ibabkin/openapi-to-zod` | yes | Renders Zod schemas for components and a `PAYLOADS` map (keyed by `operationId`) that validates the Express `Request`; ships the `openapi-to-zod` CLI |
 | `@ibabkin/openapi-express-server` | yes | `extractRoutes`, `convertOpenAPIPathToExpress`, `buildPayload`, `containerMiddleware` (ts-ioc-container request scope). A reference `RouteBuilder` lives in its `__tests__/` |
 
-All packages are ESM (`"type": "module"`), compiled with `tsc -p tsconfig.prod.json` into `esm/`. Node `>=22` (see `.nvmrc`).
+All packages are ESM (`"type": "module"`), compiled with `tsc -p tsconfig.prod.json` into `esm/`. Node `>=26` (see `.nvmrc`).
 
 ## Commands
 

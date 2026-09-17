@@ -4,7 +4,7 @@
   "author": "ibabkin <igba14@gmail.com>",
   "license": "MIT",
   "engines": {
-    "node": ">=22"
+    "node": ">=26"
   },
   "workspaces": [
     "packages/*"
