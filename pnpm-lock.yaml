@@ -47,9 +47,6 @@ importers:
 
   packages/openapi-express-server:
     dependencies:
-      '@ibabkin/openapi-to-server':
-        specifier: workspace:*
-        version: link:../openapi-to-server-interface
       '@ibabkin/openapi-to-zod':
         specifier: workspace:*
         version: link:../openapi-to-request-validator
@@ -69,6 +66,9 @@ importers:
         specifier: ^4.6.5
         version: 4.6.5
     devDependencies:
+      '@ibabkin/openapi-to-server':
+        specifier: workspace:*
+        version: link:../openapi-to-server-interface
       '@jest/test-sequencer':
         specifier: 29.7.0
         version: 29.7.0
