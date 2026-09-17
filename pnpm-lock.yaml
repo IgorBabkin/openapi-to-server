@@ -42,8 +42,8 @@ importers:
         specifier: 3.9.7
         version: 3.9.7
       release-monorepo-semantically:
-        specifier: 1.10.0
-        version: 1.10.0
+        specifier: 1.12.0
+        version: 1.12.0
 
   packages/openapi-express-server:
     dependencies:
@@ -2703,8 +2703,8 @@ packages:
   reflect-metadata@0.2.2:
     resolution: {integrity: sha512-urBwgfrvVP/eAyXx4hluJivBKzuEbSQs9rKWCrCkbSxNv8mxPcUZKeuoF3Uy4mJl3Lwprp6yy5/39VWigZ4K6Q==}
 
-  release-monorepo-semantically@1.10.0:
-    resolution: {integrity: sha512-HhLdnWqgBUTEdoNykbVock6GmgiDDc+XakqGUC/IVV2NjCsq1xWvFecjXOPfCSmd7mf9hrmE4y5cTp0onhyp2g==}
+  release-monorepo-semantically@1.12.0:
+    resolution: {integrity: sha512-QYwgsgT5ZiXHRnTmNw1qsno1Bs1y3bffI1axjWgXf4GMoyst6f1EyQmSPKuw+fWLJ/T4vcFLJWBlQgkzS9LBiw==}
     engines: {node: '>=20.11'}
     hasBin: true
 
@@ -3007,15 +3007,6 @@ packages:
   trim-newlines@4.1.1:
     resolution: {integrity: sha512-jRKj0n0jXWo6kh62nA5TEh3+4igKDXLvzBJcPpiizP7oOolUrYIxmVBG9TOtHYFHoddUk6YvAkGeGoSVTXfQXQ==}
     engines: {node: '>=12'}
-
-  ts-ioc-container@56.3.0:
-    resolution: {integrity: sha512-2ea9vtlGFSV/t45trdW28bRICV1pTqtGVNoNaUKHjxKwa9perD+i7P+pNkmfIKPpC2GFA1lRseiTP1nKugdNZw==}
-    engines: {node: '>= 18'}
-    peerDependencies:
-      reflect-metadata: ^0.2.0
-    peerDependenciesMeta:
-      reflect-metadata:
-        optional: true
 
   ts-ioc-container@68.0.0:
     resolution: {integrity: sha512-mDFrjPwryAE6JiJ89h9t3n7W98ha+YhicHrLJ8gbPFRaN72GZqYVwhHAw83CWK3/UUSXTBRpw4VL7XBwS6yKLQ==}
@@ -6154,13 +6145,13 @@ snapshots:
 
   reflect-metadata@0.2.2: {}
 
-  release-monorepo-semantically@1.10.0:
+  release-monorepo-semantically@1.12.0:
     dependencies:
       commander: 14.0.3
       glob: 10.5.0
       handlebars: 4.7.9
       reflect-metadata: 0.2.2
-      ts-ioc-container: 56.3.0(reflect-metadata@0.2.2)
+      ts-ioc-container: 68.0.0(reflect-metadata@0.2.2)
       zod: 4.6.5
 
   require-directory@2.1.1: {}
@@ -6456,10 +6447,6 @@ snapshots:
   touch@3.1.1: {}
 
   trim-newlines@4.1.1: {}
-
-  ts-ioc-container@56.3.0(reflect-metadata@0.2.2):
-    optionalDependencies:
-      reflect-metadata: 0.2.2
 
   ts-ioc-container@68.0.0(reflect-metadata@0.2.2):
     optionalDependencies:
