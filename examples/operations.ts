@@ -1,4 +1,4 @@
-import { UseCase, HttpResponse, HttpStatus, constructor } from '@ibabkin/openapi-to-server';
+import { HttpRoute, HttpResponse, HttpStatus, constructor } from '@ibabkin/openapi-to-server';
 
 // Components
 export type HealthResponse = {
@@ -35,7 +35,7 @@ export type ErrorResponse = {
   message?: string;
 };
 
-// Use cases
+// Http routes
 export type GetHealthPayload = {};
 
 export interface GetHealthResponse extends HttpResponse {
@@ -50,7 +50,7 @@ export interface GetHealthResponse extends HttpResponse {
  * Health check
  * @tags Health
  */
-export interface GetHealthUseCase extends UseCase<GetHealthPayload, GetHealthResponse> {}
+export interface GetHealthHttpRoute extends HttpRoute<GetHealthPayload, GetHealthResponse> {}
 
 export type GetHealthDbPayload = {};
 
@@ -66,7 +66,7 @@ export interface GetHealthDbResponse extends HttpResponse {
  * Database health check
  * @tags Health
  */
-export interface GetHealthDbUseCase extends UseCase<GetHealthDbPayload, GetHealthDbResponse> {}
+export interface GetHealthDbHttpRoute extends HttpRoute<GetHealthDbPayload, GetHealthDbResponse> {}
 
 export type CreateTodoPayload = {
   body: CreateTodoPayload;
@@ -84,7 +84,7 @@ export interface CreateTodoResponse extends HttpResponse {
  * Create a new todo
  * @tags Todos
  */
-export interface CreateTodoUseCase extends UseCase<CreateTodoPayload, CreateTodoResponse> {}
+export interface CreateTodoHttpRoute extends HttpRoute<CreateTodoPayload, CreateTodoResponse> {}
 
 export type GetTodosPayload = {
   query: {
@@ -106,7 +106,7 @@ export interface GetTodosResponse extends HttpResponse {
  * List all todos
  * @tags Todos
  */
-export interface GetTodosUseCase extends UseCase<GetTodosPayload, GetTodosResponse> {}
+export interface GetTodosHttpRoute extends HttpRoute<GetTodosPayload, GetTodosResponse> {}
 
 export type UpdateTodoPayload = {
   body: UpdateTodoPayload;
@@ -124,7 +124,7 @@ export interface UpdateTodoResponse extends HttpResponse {
  * Update a todo
  * @tags Todos
  */
-export interface UpdateTodoUseCase extends UseCase<UpdateTodoPayload, UpdateTodoResponse> {}
+export interface UpdateTodoHttpRoute extends HttpRoute<UpdateTodoPayload, UpdateTodoResponse> {}
 
 export type DeleteTodoPayload = {};
 
@@ -138,7 +138,7 @@ export interface DeleteTodoResponse extends HttpResponse {
  * Delete a todo
  * @tags Todos
  */
-export interface DeleteTodoUseCase extends UseCase<DeleteTodoPayload, DeleteTodoResponse> {}
+export interface DeleteTodoHttpRoute extends HttpRoute<DeleteTodoPayload, DeleteTodoResponse> {}
 
 export type GetTodoPayload = {};
 
@@ -154,17 +154,17 @@ export interface GetTodoResponse extends HttpResponse {
  * Get a todo by ID
  * @tags Todos
  */
-export interface GetTodoUseCase extends UseCase<GetTodoPayload, GetTodoResponse> {}
+export interface GetTodoHttpRoute extends HttpRoute<GetTodoPayload, GetTodoResponse> {}
 
 // Operations
 export type Operations = {
-  getHealth: GetHealthUseCase;
-  getHealthDb: GetHealthDbUseCase;
-  createTodo: CreateTodoUseCase;
-  getTodos: GetTodosUseCase;
-  updateTodo: UpdateTodoUseCase;
-  deleteTodo: DeleteTodoUseCase;
-  getTodo: GetTodoUseCase;
+  getHealth: GetHealthHttpRoute;
+  getHealthDb: GetHealthDbHttpRoute;
+  createTodo: CreateTodoHttpRoute;
+  getTodos: GetTodosHttpRoute;
+  updateTodo: UpdateTodoHttpRoute;
+  deleteTodo: DeleteTodoHttpRoute;
+  getTodo: GetTodoHttpRoute;
 };
 
 export type RoutesPayloads = {
@@ -183,11 +183,11 @@ export interface RequestContext {
 }
 // Server Interface
 export interface IServer {
-  getHealth: constructor<GetHealthUseCase>;
-  getHealthDb: constructor<GetHealthDbUseCase>;
-  createTodo: constructor<CreateTodoUseCase>;
-  getTodos: constructor<GetTodosUseCase>;
-  updateTodo: constructor<UpdateTodoUseCase>;
-  deleteTodo: constructor<DeleteTodoUseCase>;
-  getTodo: constructor<GetTodoUseCase>;
+  getHealth: constructor<GetHealthHttpRoute>;
+  getHealthDb: constructor<GetHealthDbHttpRoute>;
+  createTodo: constructor<CreateTodoHttpRoute>;
+  getTodos: constructor<GetTodosHttpRoute>;
+  updateTodo: constructor<UpdateTodoHttpRoute>;
+  deleteTodo: constructor<DeleteTodoHttpRoute>;
+  getTodo: constructor<GetTodoHttpRoute>;
 }
