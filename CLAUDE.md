@@ -39,6 +39,19 @@ node packages/openapi-to-request-validator/bin/openapi-to-zod.js --input swagger
 
 A consumer wiring all three together (`generate` script, `RouteMediator`, DI-resolved route handlers) is `~/projects/backend-template`.
 
+## Agent guides
+
+Read the guide shipped with a dependency before using its API; it matches the installed version, and both
+dependencies below change their API between releases:
+
+- `packages/openapi-express-server/node_modules/ts-ioc-container/AGENTS.md` — recipes, pitfalls, removed APIs, error codes
+- `node_modules/release-monorepo-semantically/llms.txt` — release pipeline, bump rules, `.release.json` (validated by its `$schema`), error codes
+
+Each published package here ships its own `AGENTS.md` (listed in `files` and `exports`) for consumers' agents. When a change
+alters a package's exports, generated output or pitfalls, update its `AGENTS.md` in the same commit.
+`openapi-express-server/__tests__/agentGuides.spec.ts` fails when a guide misses an export or leaves the package, and runs
+the Express wiring recipe, which must stay a verbatim copy of `__tests__/agentRecipes/applyRoutes.ts`.
+
 ## Specs
 
 Cross-package behaviour is specified in `specs/` before it is implemented, and the tests that
