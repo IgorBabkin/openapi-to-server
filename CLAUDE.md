@@ -39,6 +39,19 @@ node packages/openapi-to-request-validator/bin/openapi-to-zod.js --input swagger
 
 A consumer wiring all three together (`generate` script, `RouteMediator`, DI-resolved route handlers) is `~/projects/backend-template`.
 
+## Agent guides
+
+Read the guide shipped with a dependency before using its API; it matches the installed version, and both
+dependencies below change their API between releases:
+
+- `packages/openapi-express-server/node_modules/ts-ioc-container/AGENTS.md` — recipes, pitfalls, removed APIs, error codes
+- `node_modules/release-monorepo-semantically/llms.txt` — release pipeline, bump rules, `.release.json` (validated by its `$schema`), error codes
+
+Each published package here ships its own `AGENTS.md` (listed in `files` and `exports`) for consumers' agents. When a change
+alters a package's exports, generated output or pitfalls, update its `AGENTS.md` in the same commit.
+`openapi-express-server/__tests__/agentGuides.spec.ts` fails when a guide misses an export or leaves the package, and runs
+the Express wiring recipe, which must stay a verbatim copy of `__tests__/agentRecipes/AppService.ts`.
+
 ## Specs
 
 Cross-package behaviour is specified in `specs/` before it is implemented, and the tests that
@@ -73,7 +86,7 @@ OpenAPIV3.Document → Handlebars templates (lib/templates/*.hbs) → TypeScript
 - **ESM output must be loadable by Node**: relative imports in `lib/` need explicit `.js` extensions; Jest maps them back to `.ts` via `moduleNameMapper` (`^(\.{1,2}/.*)\.js$`).
 - **`tsc` + `incremental`**: `clean` must delete `*.tsbuildinfo` as well as `esm/`, otherwise `tsc` believes it is up to date and emits nothing after the output is removed.
 - **Jest resolves workspace packages to sources**: `openapi-express-server/jest.config.json` maps `@ibabkin/*` to `../<pkg>/lib/index.ts`, so tests don't need a prior build of the sibling packages (they do need `hbs/`, produced on install).
-- **ts-ioc-container**: `container.hasRegistration(key)` only sees entries added with `addRegistration(Registration.fromClass(X).bindToKey(key))`, not `register(key, Provider)`. Decorated classes need `import 'reflect-metadata'` first.
+- **ts-ioc-container**: `container.hasRegistration(key)` only sees entries added with `addRegistration(...)` (key from `@register(key)` or `.bindToKey(key)`), not `register(key, Provider)`. Decorated classes need `import 'reflect-metadata'` first.
 - After editing `.hbs` files run `npm run build:hbs` (or `pnpm build`) before running tests against `esm/`.
 - Generated output is consumed by `backend-template` with `^` ranges; changes to generated shapes or to the runtime exports (`createUrl`, `HttpResponse`, `HttpRoute`, …) are breaking for it and need a major bump.
 

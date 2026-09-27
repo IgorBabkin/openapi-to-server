@@ -42,8 +42,8 @@ importers:
         specifier: 3.9.7
         version: 3.9.7
       release-monorepo-semantically:
-        specifier: 1.12.0
-        version: 1.12.0
+        specifier: 1.14.0
+        version: 1.14.0
 
   packages/openapi-express-server:
     dependencies:
@@ -60,8 +60,8 @@ importers:
         specifier: ^0.2.2
         version: 0.2.2
       ts-ioc-container:
-        specifier: ^72.1.0
-        version: 72.1.0(reflect-metadata@0.2.2)
+        specifier: ^72.2.0
+        version: 72.2.0(reflect-metadata@0.2.2)
       zod:
         specifier: ^4.6.5
         version: 4.6.5
@@ -2703,8 +2703,8 @@ packages:
   reflect-metadata@0.2.2:
     resolution: {integrity: sha512-urBwgfrvVP/eAyXx4hluJivBKzuEbSQs9rKWCrCkbSxNv8mxPcUZKeuoF3Uy4mJl3Lwprp6yy5/39VWigZ4K6Q==}
 
-  release-monorepo-semantically@1.12.0:
-    resolution: {integrity: sha512-QYwgsgT5ZiXHRnTmNw1qsno1Bs1y3bffI1axjWgXf4GMoyst6f1EyQmSPKuw+fWLJ/T4vcFLJWBlQgkzS9LBiw==}
+  release-monorepo-semantically@1.14.0:
+    resolution: {integrity: sha512-KSYFfVAQsUx6PAI2ejDF4kDzJSHKvuazbGx296hL8SdSQRMYimF4hVRrc2jEP9/OVPqxb+V+a9qmUS02fsrAVA==}
     engines: {node: '>=20.11'}
     hasBin: true
 
@@ -3017,8 +3017,8 @@ packages:
       reflect-metadata:
         optional: true
 
-  ts-ioc-container@72.1.0:
-    resolution: {integrity: sha512-MiS6FvtCey6QCvqJiiHxnTEF6bqoShHnBW5N7GOzMiAmTYbCRJtEFuRugUHf4L+x0vli1fgsuh9/5PBH/hGQZA==}
+  ts-ioc-container@72.2.0:
+    resolution: {integrity: sha512-LlCpFqgT8NiNh9M3jXpkHuTKDOcdkt3gVVzHgsRVjX6iB2g7S7zLXMIVlM1PhinhqY1xUvOpMKw6k0GHIhq5Dg==}
     engines: {node: '>= 18'}
     peerDependencies:
       reflect-metadata: ^0.2.0
@@ -6154,7 +6154,7 @@ snapshots:
 
   reflect-metadata@0.2.2: {}
 
-  release-monorepo-semantically@1.12.0:
+  release-monorepo-semantically@1.14.0:
     dependencies:
       commander: 14.0.3
       glob: 10.5.0
@@ -6461,7 +6461,7 @@ snapshots:
     optionalDependencies:
       reflect-metadata: 0.2.2
 
-  ts-ioc-container@72.1.0(reflect-metadata@0.2.2):
+  ts-ioc-container@72.2.0(reflect-metadata@0.2.2):
     optionalDependencies:
       reflect-metadata: 0.2.2
 
